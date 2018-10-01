@@ -23,6 +23,14 @@
         <servlet-name>forme</servlet-name>
         <servlet-class>com.controller.forme</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddProduit</servlet-name>
+        <servlet-class>com.controller.AddProduit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModifierProduit</servlet-name>
+        <servlet-class>com.controller.ModifierProduit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/connexion</url-pattern>
@@ -42,6 +50,14 @@
     <servlet-mapping>
         <servlet-name>forme</servlet-name>
         <url-pattern>/forme</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProduit</servlet-name>
+        <url-pattern>/addProduit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModifierProduit</servlet-name>
+        <url-pattern>/modifierProduit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

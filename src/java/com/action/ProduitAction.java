@@ -19,4 +19,9 @@ public class ProduitAction {
         ArrayList<Produit> produits = ProduitsManager.getAll();
         return produits;
     }
+    
+    public static Produit trouverProduit(int id) {
+        Produit produit = ProduitsManager.getById(id);
+        return produit;
+    }
 }

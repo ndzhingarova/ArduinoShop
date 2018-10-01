@@ -17,32 +17,57 @@ import java.util.ArrayList;
  * @author nikoletad
  */
 public class ProduitsManager {
-    
+
     private static String queryGetAll = "select * from produit";
-    
-    	public static ArrayList<Produit> getAll() {
-		ArrayList<Produit> retour = null;
-		try {
-			PreparedStatement ps =  ConnexionBD.getConnection().prepareStatement(queryGetAll);
-			ResultSet result = ps.executeQuery();
-				retour = new ArrayList<>();
-				while (result.next()) {
-					Produit prod = new Produit();
-					prod.setId(result.getInt("id"));
-					prod.setNom(result.getString("nom"));
-					prod.setPrix(result.getDouble("prix"));
-					prod.setDescription(result.getString("description"));
-					prod.setCategorie(result.getString("categorie"));
-					prod.setImage(result.getString("image"));		
-					retour.add(prod);
-				}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		ConnexionBD.closeConnection();
-		
-		return retour;
-	}
-    
+    private static String queryGetById = "select * from produit where ID = ? ";
+
+    public static ArrayList<Produit> getAll() {
+        ArrayList<Produit> retour = null;
+        try {
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(queryGetAll);
+            ResultSet result = ps.executeQuery();
+            retour = new ArrayList<>();
+            while (result.next()) {
+                Produit prod = new Produit();
+                prod.setId(result.getInt("id"));
+                prod.setNom(result.getString("nom"));
+                prod.setPrix(result.getDouble("prix"));
+                prod.setDescription(result.getString("description"));
+                prod.setCategorie(result.getString("categorie"));
+                prod.setImage(result.getString("image"));
+                retour.add(prod);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ConnexionBD.closeConnection();
+
+        return retour;
+    }
+
+    public static Produit getById(int id) {
+        Produit prod = null;
+        try {
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(queryGetById);
+            ps.setInt(1, id);
+            ResultSet result = ps.executeQuery();
+            prod = new Produit();
+            while (result.next()) {
+                prod.setId(result.getInt("id"));
+                prod.setNom(result.getString("nom"));
+                prod.setPrix(result.getDouble("prix"));
+                prod.setDescription(result.getString("description"));
+                prod.setCategorie(result.getString("categorie"));
+                prod.setImage(result.getString("image"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ConnexionBD.closeConnection();
+
+        return prod;
+    }
+
 }

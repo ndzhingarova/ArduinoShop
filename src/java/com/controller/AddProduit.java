@@ -6,22 +6,25 @@
 package com.controller;
 
 import com.action.ProduitAction;
+import com.entities.LignePanier;
 import com.entities.Produit;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author nikoletad
+ * @author usager
  */
-public class Produits extends HttpServlet {
+public class AddProduit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,48 +35,33 @@ public class Produits extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public static String CLE_DONNEE = "produits";
-    public static ArrayList<Produit> mes = null;
-    
+    HashMap<Integer, LignePanier> panier = null;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
- //       try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet forme</title>");
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet forme at " + request.getContextPath() + "</h1>");
-//
-//            out.println("<p>");
-             mes = ProduitAction.afficherProduits();
-//            for(Produit p :retour)
-//            {
-//                out.println(p);
-//            }
-////            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(sql);
-////            ResultSet result = ps.executeQuery();
-////            if (result.isBeforeFirst()) {
-////                while (result.next()) {
-////                    out.println(result.getString("nom"));
-////                }
-////            }
-//            out.println("</p>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-  //      }
-        // request.setAttribute(CLE_DONNEE, ProduitAction.afficherProduits());
-        request.getRequestDispatcher("produits.jsp").include(request, response);
-        //}
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        panier = (HashMap) session.getAttribute("panier");
+        if (panier == null) {
+            panier = new HashMap();
+        }
+
+        if (request.getParameter("add") != null) {
+            Produit produit = ProduitAction.trouverProduit(Integer.parseInt(request.getParameter("add")));
+            LignePanier existant = panier.get(produit.getId());
+            if ((existant != null)) {
+                existant.setQuantite(existant.getQuantite() + 1);
+            } else {
+                LignePanier ligne = new LignePanier(produit);
+                panier.put(ligne.getProduit().getId(), ligne);
+                session.setAttribute("panier", panier);
+            }
+        }
+        request.getRequestDispatcher("produits").forward(request, response);
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
