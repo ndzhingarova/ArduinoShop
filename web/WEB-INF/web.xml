@@ -31,6 +31,14 @@
         <servlet-name>ModifierProduit</servlet-name>
         <servlet-class>com.controller.ModifierProduit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Commander</servlet-name>
+        <servlet-class>com.controller.Commander</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Confirmer</servlet-name>
+        <servlet-class>com.controller.Confirmer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/connexion</url-pattern>
@@ -58,6 +66,14 @@
     <servlet-mapping>
         <servlet-name>ModifierProduit</servlet-name>
         <url-pattern>/modifierProduit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Commander</servlet-name>
+        <url-pattern>/commander</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Confirmer</servlet-name>
+        <url-pattern>/confirmer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

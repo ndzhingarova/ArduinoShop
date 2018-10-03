@@ -22,11 +22,8 @@
     </head>
     <body>
         <jsp:include page = "navbar.jsp" flush = "true" />
-        <h1>affichage des produits <% Cookie ck[]= request.getCookies();  
-for(int i=0;i<ck.length;i++){  
- out.print("<br>"+ck[i].getName()+" "+ck[i].getValue());//printing name and value of cookie  
-}   %></h1>        
-               <table style="width:70%">
+        <h1>affichage des produits </h1>        
+        <table style="width:70%">
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
@@ -36,28 +33,29 @@ for(int i=0;i<ck.length;i++){
                 <th>Image</th>
             </tr>
             <form action="addProduit">
-            <%
-                if (listeproduits != null) {
-                    for (Produit prod : listeproduits) {
-            %>
-            <tr>
-                <td>
-                    <img alt="prod image" src="images/<%=prod.getImage()%>" height="150" width="150"/> 
-                </td> 
+                <%
+                    if (listeproduits != null) {
+                        for (Produit prod : listeproduits) {
+                %>
+                <tr>
+                    <td>
+                        <img alt="prod image" src="images/<%=prod.getImage()%>" height="150" width="150"/> 
+                    </td> 
 
-                <td> <%=prod.getNom()%> </td>
-                <td> <%=prod.getPrix()%> </td>
-                <td> <%=prod.getDescription()%> </td>
-                <td> <%=prod.getCategorie()%> </td>
-                <td> <input type="submit" name="add" value="<%=prod.getId()%>" text="Add to Cart" </td>                
-            </tr>
-
-
+                    <td> <%=prod.getNom()%> </td>
+                    <td> <%=prod.getPrix()%> </td>
+                    <td> <%=prod.getDescription()%> </td>
+                    <td> <%=prod.getCategorie()%> </td>
+                    <td> <input type="submit" name="add" value="<%=prod.getId()%>" text="Add to Cart" </td>                
+                </tr>
 
 
-            <%
-                }}
-            %>
+
+
+                <%
+                        }
+                    }
+                %>
             </form>
         </table       
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
