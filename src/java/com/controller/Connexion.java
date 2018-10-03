@@ -43,44 +43,51 @@ public class Connexion extends HttpServlet
         HttpSession session = request.getSession();
         // athetification apres une bd
         Utilisateur utilisateurAValider = UtilisateurManager.getByCourriel(courriel);
-        if (utilisateurAValider == null)
+        
+        if (utilisateurAValider == null)//AUCUN UTILISATEUR TROUVER
         {
             session.setAttribute("userNotFound",courriel + "Ce courriel est invalide");
-            request.getRequestDispatcher("Connexion").forward(request, response);
+            request.getRequestDispatcher("connexion.jsp").forward(request, response);
         } 
         else
         {
-            if(utilisateurAValider.validatePassword(password))
+            if(utilisateurAValider.validatePassword(password))//MOTE DE PASSE VALIDE
             {
-                            //Ajouter le nom a la session
-            session.setAttribute("nom", utilisateurAValider.getCourriel());
-            
-            String cookies = request.getParameter("sauvegarde");
-            if(cookies!=null || true)
-            {
-                Cookie nomUtilisateur = new Cookie("nom", utilisateurAValider.getCourriel());
-                Cookie pwdutilisateur = new Cookie("pwd", utilisateurAValider.getMotDePasse());
-                nomUtilisateur.setMaxAge(60 * 60 * 24);
-                pwdutilisateur.setMaxAge(60 * 60 * 24);
-                response.addCookie(nomUtilisateur);
-                response.addCookie(pwdutilisateur);
-                if(session.getAttribute("wrongPassword") != null)
+                                //Ajouter le nom a la session
+                session.setAttribute("nom", utilisateurAValider.getCourriel());
+
+                String cookies = request.getParameter("sauvegarde");
+                if(cookies!=null || true)
                 {
-                    session.removeAttribute("wrongPassword");
+                    //creation
+                    Cookie nomUtilisateur = new Cookie("utilisateur", utilisateurAValider.getCourriel());
+                    Cookie pwdutilisateur = new Cookie("pwd", utilisateurAValider.getMotDePasse());
+                    nomUtilisateur.setMaxAge(60 * 60 * 24);
+                    pwdutilisateur.setMaxAge(60 * 60 * 24);
+                    response.addCookie(nomUtilisateur);
+                    response.addCookie(pwdutilisateur);
+                    
+                    if(session.getAttribute("wrongPassword") != null)
+                    {
+                        session.removeAttribute("wrongPassword");
+                    }
+                    if(session.getAttribute("userNotFound") != null)
+                    {
+                        session.removeAttribute("userNotFound");
+                    }
                 }
+                request.getRequestDispatcher("produits").forward(request, response);
+            }
+            else//MOT DE PASSE NON-VALIDE
+            {
+               Cookie nomUtilisateur = new Cookie("nom", utilisateurAValider.getCourriel());
                 if(session.getAttribute("userNotFound") != null)
                 {
                     session.removeAttribute("userNotFound");
                 }
-            }
-            request.getRequestDispatcher("produits").forward(request, response);
-            }
-            else
-            {
-               Cookie nomUtilisateur = new Cookie("nom", utilisateurAValider.getCourriel());
                response.addCookie(nomUtilisateur);
                session.setAttribute("wrongPassword",utilisateurAValider.getCourriel() + "Ce mot de passe est invalide");
-            request.getRequestDispatcher("Connexion").forward(request, response);
+            request.getRequestDispatcher("connexion.jsp").forward(request, response);
             }
         }
     }
