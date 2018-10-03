@@ -78,12 +78,12 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="livraison" id="express" value="express" disabled>
+                    <input class="form-check-input" type="radio" name="livraison" id="express" value="express">
                     <label class="form-check-label" for="express">
                         Livraison express - 3 jours ouvrables
                     </label>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Confirmer la commande    </button></br>
                 </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Confirmer la commande</button></br>
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
