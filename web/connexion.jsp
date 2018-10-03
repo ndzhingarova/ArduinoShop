@@ -19,7 +19,7 @@
             <div class="row">
                 <div container>
                     <h1 >Connexion </h1>
-                    <form class="form-signin" action="connexion" method="get">
+                    <form class="form-signin" action="connexion" method="post">
                         <input type="text" class="form-control" name="nom" placeholder="Nom" required autofocus></br>
                         <input type="password" class="form-control" name="password" placeholder="Password" required></br>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></br>
