@@ -8,17 +8,15 @@ package com.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author nikoletad
+ * @author usager
  */
-public class Connexion extends HttpServlet {
+public class Confirmer extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,35 +30,15 @@ public class Connexion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-  
+        String prenom = request.getParameter("prenom");
         String nom = request.getParameter("nom");
-        String password = request.getParameter("password");
-
-        
-        // athetification apres une bd
-        
-        if (nom.equals("root") && password.equals("root")) {
-            out.println(" Bienvenue " + nom);
-            //Creer une nouvelle session
-            HttpSession session = request.getSession();
-            //Ajouter le nom a la session
-            session.setAttribute("nom", nom);
-            
-            String cookies = request.getParameter("sauvegarde");
-            if(cookies!=null){
-                Cookie nomUtilisateur = new Cookie("nom", nom);
-                Cookie pwdutilisateur = new Cookie("pwd", password);
-                nomUtilisateur.setMaxAge(60 * 60 * 24);
-                pwdutilisateur.setMaxAge(60 * 60 * 24);
-                response.addCookie(nomUtilisateur);
-                response.addCookie(pwdutilisateur);
-            }
-            request.getRequestDispatcher("produits").forward(request, response);
-        } else {
-            out.println("Le mot ou username est invalide");
-            request.getRequestDispatcher("connexion.jsp").include(request, response);
-        }
+        String telephone = request.getParameter("telephone");
+        String address = request.getParameter("address");
+        String ville = request.getParameter("ville");
+        String codePostal = request.getParameter("codePostal");
+        String province = request.getParameter("province");
+        String livraison = request.getParameter("livraison");
+        request.getRequestDispatcher("confirmer.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
