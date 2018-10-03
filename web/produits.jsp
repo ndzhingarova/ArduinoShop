@@ -22,7 +22,10 @@
     </head>
     <body>
         <jsp:include page = "navbar.jsp" flush = "true" />
-        <h1>affichage des produits </h1>        
+        <h1>affichage des produits <% Cookie ck[]= request.getCookies();  
+for(int i=0;i<ck.length;i++){  
+ out.print("<br>"+ck[i].getName()+" "+ck[i].getValue());//printing name and value of cookie  
+}   %></h1>        
                <table style="width:70%">
             <tr>
                 <th>Id</th>

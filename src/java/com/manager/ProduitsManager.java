@@ -40,10 +40,11 @@ public class ProduitsManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        finally
+        {
         ConnexionBD.closeConnection();
-
         return retour;
+        }
     }
 
     public static Produit getById(int id) {
@@ -52,8 +53,8 @@ public class ProduitsManager {
             PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(queryGetById);
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
-            prod = new Produit();
-            while (result.next()) {
+            if(result.next()) {
+                prod = new Produit();
                 prod.setId(result.getInt("id"));
                 prod.setNom(result.getString("nom"));
                 prod.setPrix(result.getDouble("prix"));
@@ -64,10 +65,11 @@ public class ProduitsManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        ConnexionBD.closeConnection();
-
-        return prod;
+        finally
+        {
+            ConnexionBD.closeConnection();
+            return prod;   
+        }
     }
 
 }
