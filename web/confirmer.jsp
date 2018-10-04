@@ -4,6 +4,7 @@
     Author     : nikoletad
 --%>
 
+<%@page import="com.entities.Utilisateur"%>
 <%@page import="java.util.Collection"%>
 <%@page import="java.util.List"%>
 <%@page import="com.entities.LignePanier"%>
@@ -12,6 +13,8 @@
 <% HashMap<Integer, LignePanier> articles = (HashMap<Integer, LignePanier>) session.getAttribute("panier");
     double somme = 0;
     int quant = 0;
+    Utilisateur u = (Utilisateur) session.getAttribute("utilisateur");
+    String livraison = (String) session.getAttribute("livraison");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,13 +28,16 @@
     <body>
         <jsp:include page = "navbar.jsp" flush = "true" />
         <div class="container">
-            <h2>Votre Commande</h2>     
-            <p><span>Nom: </span>John Doe</p>
-            <p><span>Adress:  </span>Milington str 2546, HOHOHO Montreal, Quebec</p>
-            <p><span>Telephone: </span>461461416441  </p>
             <form action="envoyer">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer</button></br>
             </form>
+            <h2>Votre Commande</h2> 
+
+            <p><span>Nom: </span><%= u.getPrenom() + u.getNom()%></p>
+            <p><span>Adress:  </span><%= u.getAdresse() + ", " + u.getCodePostal() + " " + u.getVille() + ", " + u.getProvince()%></p>
+            <p><span>Telephone: </span><%= u.getTelephone()%></p>
+            <p><span>Mode de livraison: </span><%= livraison%></p>
+
             <table class="table table-hover">
                 <thead>
                     <tr>
