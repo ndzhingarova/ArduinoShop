@@ -27,9 +27,6 @@
         <jsp:include page = "navbar.jsp" flush = "true" />
         <div class="container">
             <h2>Votre panier</h2>  
-            <% if (message != null) {%>
-                <h1><%=message%></h1>
-                <%    }%>
             <form action="commander">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Commander</button></br>
             </form>

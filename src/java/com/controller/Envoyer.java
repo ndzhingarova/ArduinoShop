@@ -5,9 +5,18 @@
  */
 package com.controller;
 
+import com.action.CommandeAction;
+import com.action.LigneAction;
+import com.entities.Commande;
+import com.entities.Ligne;
+import com.entities.LignePanier;
 import com.entities.Utilisateur;
+import com.outil.SendMailTLS;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,13 +73,13 @@ public class Envoyer extends HttpServlet {
 //        }
         boolean envoye = SendMailTLS.sendMail(u.getCourriel(), subject, body);
         String messageResultat = "";
-        if(enregistre){
+        /*if(enregistre){
             session.setAttribute("panier", null);
             messageResultat = "Merci, pour votre commande.";
         } else {
             messageResultat = "Votre commande n'était pas enregistrer. S'il vous plaît essaier plus tard";
         }
-        request.setAttribute("message", messageResultat);
+        request.setAttribute("message", messageResultat);*/
                     
         }
         //request.getRequestDispatcher("panier").forward(request, response);

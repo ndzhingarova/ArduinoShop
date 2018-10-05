@@ -2,10 +2,10 @@
 -- version 4.5.4.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Sep 26, 2018 at 12:47 PM
--- Server version: 5.7.11
--- PHP Version: 7.0.3
+-- Client :  localhost
+-- Généré le :  Ven 05 Octobre 2018 à 13:42
+-- Version du serveur :  5.7.11
+-- Version de PHP :  5.6.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `arduino`
+-- Base de données :  `arduino`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorie`
+-- Structure de la table `categorie`
 --
 
 CREATE TABLE `categorie` (
@@ -33,7 +33,7 @@ CREATE TABLE `categorie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `categorie`
+-- Contenu de la table `categorie`
 --
 
 INSERT INTO `categorie` (`ID`, `NOM`, `DESCRIPTION`) VALUES
@@ -46,27 +46,31 @@ INSERT INTO `categorie` (`ID`, `NOM`, `DESCRIPTION`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `commande`
+-- Structure de la table `commande`
 --
 
 CREATE TABLE `commande` (
   `ID` int(11) NOT NULL,
   `ID_UTILISATEUR` int(11) NOT NULL,
-  `DATE` date DEFAULT NULL
+  `DATE` date DEFAULT NULL,
+  `LIVRAISON` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `commande`
+-- Contenu de la table `commande`
 --
 
-INSERT INTO `commande` (`ID`, `ID_UTILISATEUR`, `DATE`) VALUES
-(1, 1, '2018-09-26'),
-(2, 1, '2018-09-25');
+INSERT INTO `commande` (`ID`, `ID_UTILISATEUR`, `DATE`, `LIVRAISON`) VALUES
+(1, 1, '2018-09-26', ''),
+(2, 1, '2018-09-25', ''),
+(3, 1, '2018-10-05', 'gratuit'),
+(4, 1, '2018-10-05', 'gratuit'),
+(5, 1, '2018-10-05', 'gratuit');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ligne`
+-- Structure de la table `ligne`
 --
 
 CREATE TABLE `ligne` (
@@ -77,18 +81,27 @@ CREATE TABLE `ligne` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ligne`
+-- Contenu de la table `ligne`
 --
 
 INSERT INTO `ligne` (`ID`, `ID_COMMANDE`, `ID_PRODUIT`, `QUANTITE`) VALUES
 (1, 1, 1000067, 1),
 (2, 1, 1000057, 2),
-(3, 2, 9000007, 1);
+(3, 2, 9000007, 1),
+(12, 3, 1000015, 1),
+(13, 3, 3, 2),
+(14, 3, 1000005, 1),
+(15, 4, 1000015, 3),
+(16, 4, 3, 1),
+(17, 4, 1000053, 1),
+(18, 5, 1000015, 3),
+(19, 5, 3, 1),
+(20, 5, 1000053, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produit`
+-- Structure de la table `produit`
 --
 
 CREATE TABLE `produit` (
@@ -101,7 +114,7 @@ CREATE TABLE `produit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `produit`
+-- Contenu de la table `produit`
 --
 
 INSERT INTO `produit` (`ID`, `NOM`, `PRIX`, `DESCRIPTION`, `CATEGORIE`, `IMAGE`) VALUES
@@ -119,41 +132,49 @@ INSERT INTO `produit` (`ID`, `NOM`, `PRIX`, `DESCRIPTION`, `CATEGORIE`, `IMAGE`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilisateur`
+-- Structure de la table `utilisateur`
 --
 
 CREATE TABLE `utilisateur` (
   `ID` int(11) NOT NULL,
   `COURRIEL` varchar(30) NOT NULL,
-  `MOTDEPASSE` varchar(12) NOT NULL
+  `MOTDEPASSE` varchar(12) NOT NULL,
+  `NOM` varchar(50) NOT NULL,
+  `PRENOM` varchar(30) NOT NULL,
+  `TELEPHONE` varchar(10) NOT NULL,
+  `ADRESSE` varchar(50) NOT NULL,
+  `VILLE` varchar(50) NOT NULL,
+  `CODEPOSTAL` varchar(6) NOT NULL,
+  `PROVINCE` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `utilisateur`
+-- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`ID`, `COURRIEL`, `MOTDEPASSE`) VALUES
-(1, 'n.dzhingarova@gmail.com', 'niki123');
+INSERT INTO `utilisateur` (`ID`, `COURRIEL`, `MOTDEPASSE`, `NOM`, `PRENOM`, `TELEPHONE`, `ADRESSE`, `VILLE`, `CODEPOSTAL`, `PROVINCE`) VALUES
+(1, 'n.dzhingarova@gmail.com', 'niki123', 'desmeules', 'niki', '5467657788', '7777', 'laval', 'H7P2K1', 'Ã?le-du-Prince-Ã?douard'),
+(2, 'd@d.com', 'darryl', 'darryl', 'desmeules', '5147019401', '3154', 'rue fernand', 'H7P2K1', 'QuÃ©bec');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables exportées
 --
 
 --
--- Indexes for table `categorie`
+-- Index pour la table `categorie`
 --
 ALTER TABLE `categorie`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `commande`
+-- Index pour la table `commande`
 --
 ALTER TABLE `commande`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ID_UTILISATEUR` (`ID_UTILISATEUR`);
 
 --
--- Indexes for table `ligne`
+-- Index pour la table `ligne`
 --
 ALTER TABLE `ligne`
   ADD PRIMARY KEY (`ID`),
@@ -161,56 +182,57 @@ ALTER TABLE `ligne`
   ADD KEY `ID_PRODUIT` (`ID_PRODUIT`);
 
 --
--- Indexes for table `produit`
+-- Index pour la table `produit`
 --
 ALTER TABLE `produit`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `CATEGORIE` (`CATEGORIE`);
 
 --
--- Indexes for table `utilisateur`
+-- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `COURRIEL` (`COURRIEL`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables exportées
 --
 
 --
--- AUTO_INCREMENT for table `commande`
+-- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `ligne`
+-- AUTO_INCREMENT pour la table `ligne`
 --
 ALTER TABLE `ligne`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT for table `utilisateur`
+-- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `commande`
+-- Contraintes pour la table `commande`
 --
 ALTER TABLE `commande`
   ADD CONSTRAINT `commande_ibfk_1` FOREIGN KEY (`ID_UTILISATEUR`) REFERENCES `utilisateur` (`ID`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `ligne`
+-- Contraintes pour la table `ligne`
 --
 ALTER TABLE `ligne`
   ADD CONSTRAINT `ligne_ibfk_2` FOREIGN KEY (`ID_PRODUIT`) REFERENCES `produit` (`ID`),
   ADD CONSTRAINT `ligne_ibfk_3` FOREIGN KEY (`ID_COMMANDE`) REFERENCES `commande` (`ID`);
 
 --
--- Constraints for table `produit`
+-- Contraintes pour la table `produit`
 --
 ALTER TABLE `produit`
   ADD CONSTRAINT `produit_ibfk_1` FOREIGN KEY (`CATEGORIE`) REFERENCES `categorie` (`ID`);
