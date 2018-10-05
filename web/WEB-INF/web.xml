@@ -20,10 +20,6 @@
         <servlet-class>com.controller.Quitter</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>forme</servlet-name>
-        <servlet-class>com.controller.forme</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddProduit</servlet-name>
         <servlet-class>com.controller.AddProduit</servlet-class>
     </servlet>
@@ -38,6 +34,10 @@
     <servlet>
         <servlet-name>Confirmer</servlet-name>
         <servlet-class>com.controller.Confirmer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FiltrerCategorie</servlet-name>
+        <servlet-class>com.controller.FiltrerCategorie</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
@@ -56,10 +56,6 @@
         <url-pattern>/quitter</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>forme</servlet-name>
-        <url-pattern>/forme</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AddProduit</servlet-name>
         <url-pattern>/addProduit</url-pattern>
     </servlet-mapping>
@@ -74,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>Confirmer</servlet-name>
         <url-pattern>/confirmer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FiltrerCategorie</servlet-name>
+        <url-pattern>/filtrercategorie</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

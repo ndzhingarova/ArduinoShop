@@ -23,35 +23,41 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
     <body>
+                <script type="text/javascript" src="./javascript/form_validation.js"></script>
         <div class="container-fluid col-6">
             <form action="confirmer">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Prénom</label>
-                    <input type="text" class="form-control" name="prenom" placeholder="Votre prénom" value="<%=u.getPrenom()%>">
+                    <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prénom" value="<%=u.getPrenom()%>" onkeyup="validateNames('prenom','prenomFeedback')" required>
+                    <div id="prenomFeedback"></div>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Nom</label>
-                    <input type="text" class="form-control" name="nom" placeholder="Votre nom" value="<%=u.getNom()%>">
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom" value="<%=u.getNom()%>" onkeyup="validateNames('nom','nomFeedback')" required>
+                    <div id="nomFeedback"></div>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Téléphone</label>
-                    <input type="text" class="form-control" name="telephone" placeholder="Votre téléphone" value="<%=u.getTelephone()%>">
+                    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Votre téléphone" value="<%=u.getTelephone()%>" onkeyup="validatePhone('telephone','telephoneFeedback')" required>
+                    <div id="telephoneFeedback"></div>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Address</label>
-                    <input type="text" class="form-control" name="adresse" placeholder="Votre address" value="<%=u.getAdresse()%>">
+                    <input type="text" class="form-control" name="adresse" placeholder="Votre address" value="<%=u.getAdresse()%>" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Ville</label>
-                    <input type="text" class="form-control" name="ville" placeholder="Votre ville" value="<%=u.getVille()%>">
+                    <input type="text" class="form-control" id="ville" name="ville" placeholder="Votre ville" value="<%=u.getVille()%>" onkeyup="validateNames('ville','villeFeedback')" required>
+                    <div id="villeFeedback"></div>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Code Postal</label>
-                    <input type="text" class="form-control" name="codePostal" placeholder="Votre code postal" value="<%=u.getCodePostal()%>">
+                    <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder="Votre code postal" value="<%=u.getCodePostal()%>" onkeyup="validatePostalCode('codePostal','codePostalValidation')" required>
+                    <div id="codePostalValidation"></div>
                 </div>
                 <div class="form-group">
                     <label for="inputState">Province</label>
-                    <select id="province" name="province" class="form-control">
+                    <select id="province" name="province" class="form-control" required>
                         <option selected>Votre province</option>
                         <option value="Alberta">Alberta</option>
                         <option value="Colombie-Britannique">Colombie-Britannique</option>

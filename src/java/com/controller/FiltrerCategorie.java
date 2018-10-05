@@ -5,8 +5,10 @@
  */
 package com.controller;
 
+import com.entities.Produit;
+import com.manager.ProduitsManager;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +17,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author nikoletad
+ * @author ddaar
  */
-public class Quitter extends HttpServlet {
+public class FiltrerCategorie extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,16 +32,21 @@ public class Quitter extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("Vous deconnectez avec succes");
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        session.removeAttribute("nom");
-        session.removeAttribute("idUtilisateur");
-      
-        request.getRequestDispatcher("index.jsp").include(request, response);
-        // Suppression de la session
-        session.invalidate();
+        /*int i = (int) request.getAttribute("categorie");
+        ArrayList<Produit> p = ProduitsManager.getByCategory(i);
+        session.setAttribute("produit", p);*/
+        if(request.getParameter("categorie").equals("all"))
+        {
+           session.setAttribute("produit",ProduitsManager.getAll()); 
+        }
+        else
+        {
+          session.setAttribute("produit",ProduitsManager.getByCategory(Integer.parseInt(request.getParameter("categorie"))));  
+        }
+        
+        request.getRequestDispatcher("produits").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
