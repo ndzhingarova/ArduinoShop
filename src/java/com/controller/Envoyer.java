@@ -34,8 +34,48 @@ public class Envoyer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        session.removeAttribute("panier");
+         HttpSession session = request.getSession();
+        HashMap<Integer, LignePanier> articles = (HashMap<Integer, LignePanier>) session.getAttribute("panier");
+        Utilisateur u = (Utilisateur) session.getAttribute("utilisateur");
+        String livraison = (String) session.getAttribute("livraison");
+
+        Commande c = new Commande();
+        c.setIdUtilisateur(u.getId());
+        Date date = new Date();
+        java.sql.Date dateDB = new java.sql.Date(date.getTime());
+        c.setDateObject(dateDB);
+        c.setLivraison(livraison);
+        int idbase = CommandeAction.creeCommande(c);
+        Collection<LignePanier> les = articles.values();
+        if(les!=null){
+
+        boolean enregistre = false;
+        for(LignePanier l : les){
+            Ligne ligneBD = new Ligne(idbase, l.getProduit().getId(),l.getQuantite());
+            enregistre = LigneAction.creeLigne(ligneBD);
+        }
+        String subject = "Votre commande a été effectue" ;
+        String body = "Cher client,"
+                + "\n Merci pour votre commande. Notre /quipe vont vous contacter dans 24 heures pour le confirmer";
+//        try (PrintWriter out = response.getWriter()) {
+//            out.println(articles.size());
+//            out.println(u.getCourriel());
+//            out.println(idbase);
+//        }
+        boolean envoye = SendMailTLS.sendMail(u.getCourriel(), subject, body);
+        String messageResultat = "";
+        if(enregistre){
+            session.setAttribute("panier", null);
+            messageResultat = "Merci, pour votre commande.";
+        } else {
+            messageResultat = "Votre commande n'était pas enregistrer. S'il vous plaît essaier plus tard";
+        }
+        request.setAttribute("message", messageResultat);
+                    
+        }
+        //request.getRequestDispatcher("panier").forward(request, response);
+        //HttpSession session = request.getSession();
+        //session.removeAttribute("panier");
         session.setAttribute("messageAccueil", "Merci pour votre commande cher " + ((Utilisateur)session.getAttribute("utilisateur")).getNom());
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
