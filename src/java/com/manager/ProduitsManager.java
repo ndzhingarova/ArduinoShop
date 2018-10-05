@@ -20,6 +20,7 @@ public class ProduitsManager {
 
     private static String queryGetAll = "select * from produit";
     private static String queryGetById = "select * from produit where ID = ? ";
+    private static String queryGetByCategory = "select * from produit where CATEGORIE = ? ";
 
     public static ArrayList<Produit> getAll() {
         ArrayList<Produit> retour = null;
@@ -69,6 +70,34 @@ public class ProduitsManager {
         {
             ConnexionBD.closeConnection();
             return prod;   
+        }
+    }
+    
+        public static ArrayList<Produit> getByCategory(int categorie) {
+        ArrayList<Produit> retour = null;
+        try {
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(queryGetByCategory);
+            ps.setInt(1, categorie);
+            
+            ResultSet result = ps.executeQuery();
+            retour = new ArrayList<>();
+            while (result.next()) {
+                Produit prod = new Produit();
+                prod.setId(result.getInt("id"));
+                prod.setNom(result.getString("nom"));
+                prod.setPrix(result.getDouble("prix"));
+                prod.setDescription(result.getString("description"));
+                prod.setCategorie(result.getString("categorie"));
+                prod.setImage(result.getString("image"));
+                retour.add(prod);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+        ConnexionBD.closeConnection();
+        return retour;
         }
     }
 

@@ -56,6 +56,7 @@ public class Connexion extends HttpServlet
                                 //Ajouter le nom a la session
                 session.setAttribute("nom", utilisateurAValider.getCourriel());
                 session.setAttribute("idUtilisateur",utilisateurAValider.getId());
+                session.setAttribute("utilisateur",utilisateurAValider);
                 String cookies = request.getParameter("sauvegarde");
                 if(cookies!=null || true)
                 {

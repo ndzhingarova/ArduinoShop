@@ -33,10 +33,12 @@ public class Quitter extends HttpServlet {
           response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("Vous deconnectez avec succes");
+        HttpSession session = request.getSession();
+        session.removeAttribute("nom");
+        session.removeAttribute("idUtilisateur");
       
         request.getRequestDispatcher("index.jsp").include(request, response);
         // Suppression de la session
-        HttpSession session = request.getSession();
         session.invalidate();
     }
 

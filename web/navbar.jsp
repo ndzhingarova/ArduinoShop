@@ -15,7 +15,11 @@
             <a class="nav-item nav-link" href="connexion.jsp">Connexion</a>
             <a class="nav-item nav-link" href="produits">Produits</a>
             <a class="nav-item nav-link" href="panier.jsp">Panier</a>
-            <a class="nav-item nav-link disabled" href="quitter">Quitter</a>
+            <%  
+             if(session.getAttribute("nom") != null)
+            {
+                out.print("<a class='nav-item nav-link' href='quitter'>Quitter</a>");
+             } %>
         </div>
     </div>
 </nav>
