@@ -39,6 +39,10 @@
         <servlet-name>Confirmer</servlet-name>
         <servlet-class>com.controller.Confirmer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Envoyer</servlet-name>
+        <servlet-class>com.controller.Envoyer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/connexion</url-pattern>
@@ -74,6 +78,10 @@
     <servlet-mapping>
         <servlet-name>Confirmer</servlet-name>
         <url-pattern>/confirmer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Envoyer</servlet-name>
+        <url-pattern>/envoyer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

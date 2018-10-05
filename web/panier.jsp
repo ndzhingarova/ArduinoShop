@@ -12,6 +12,7 @@
 <% HashMap<Integer, LignePanier> articles = (HashMap<Integer, LignePanier>) session.getAttribute("panier");
     double somme = 0;
     int quant = 0;
+    String message = (String) session.getAttribute("message");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,10 @@
     <body>
         <jsp:include page = "navbar.jsp" flush = "true" />
         <div class="container">
-            <h2>affichage de panier</h2>     
+            <h2>Votre panier</h2>  
+            <% if (message != null) {%>
+                <h1><%=message%></h1>
+                <%    }%>
             <form action="commander">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Commander</button></br>
             </form>
@@ -43,33 +47,36 @@
                     <%
                         if (articles != null) {
                             Collection<LignePanier> les = articles.values();
-                            if (les.isEmpty()) {%>
-                    <tr><td>Votre panier est vide</td></tr>
-                    <%} else {
-                        for (LignePanier l : les) {
+                            if (les.isEmpty()) {                             
+                %>
+                <tr><td>Votre panier est vide</td></tr>
+                <%          } else {
+                                for (LignePanier l : les) {
 
-                            somme += l.getProduit().getPrix() * l.getQuantite();
-                            quant += l.getQuantite();
-                    %>  
-                    <tr>
-                        <td>
-                            <img alt="prod image" src="images/<%=l.getProduit().getImage()%>" height="100" width="100"/> 
-                        </td>
-                        <td> <%=l.getProduit().getNom()%> </td>
-                        <td> <%=l.getProduit().getPrix()%> CAD </td>
-                        <td> <%=l.getProduit().getPrix() * l.getQuantite()%> CAD </td>
-                        <td> 
-                            <form action="modifierProduit">
-                                <input type="text" name="produit" value="<%=l.getProduit().getId()%>" hidden>
-                                <input type="text" name="quantite" value="<%=l.getQuantite()%>" size="3">
-                                <input type="submit" value="Modifier Quantité" >
-                                <input type="submit" name="retirer" value="Retirer Produit" > 
-                            </form>
-                        </td>                
-                    </tr>
-                    <%          }
+                                    somme += l.getProduit().getPrix() * l.getQuantite();
+                                    quant += l.getQuantite();
+                %>  
+                <tr>
+                    <td>
+                        <img alt="prod image" src="images/<%=l.getProduit().getImage()%>" height="100" width="100"/> 
+                    </td>
+                    <td> <%=l.getProduit().getNom()%> </td>
+                    <td> <%=l.getProduit().getPrix()%> CAD </td>
+                    <td> <%=l.getProduit().getPrix() * l.getQuantite()%> CAD </td>
+                    <td> 
+                        <form action="modifierProduit">
+                            <input type="text" name="produit" value="<%=l.getProduit().getId()%>" hidden>
+                            <input type="text" name="quantite" value="<%=l.getQuantite()%>" size="3">
+                            <input type="submit" value="Modifier Quantité" >
+                            <input type="submit" name="retirer" value="Retirer Produit" > 
+                        </form>
+                    </td>                
+                </tr>
+                <%              }
                             }
-                        }%>
+                        } else {%>
+<tr><td>Votre panier est vide</td></tr>
+<%}%>
                 </tbody>
                 <thead>
                     <tr>
