@@ -5,6 +5,8 @@
  */
 package com.controller;
 
+import com.entities.Utilisateur;
+import com.manager.UtilisateurManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author nikoletad
  */
-public class Connexion extends HttpServlet {
+public class Connexion extends HttpServlet
+{
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,38 +35,62 @@ public class Connexion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
   
-        String nom = request.getParameter("nom");
+        String courriel = request.getParameter("courriel");
         String password = request.getParameter("password");
 
-        
+        HttpSession session = request.getSession();
         // athetification apres une bd
+        Utilisateur utilisateurAValider = UtilisateurManager.getByCourriel(courriel);
         
-        if (nom.equals("root") && password.equals("root")) {
-            out.println(" Bienvenue " + nom);
-            //Creer une nouvelle session
-            HttpSession session = request.getSession();
-            //Ajouter le nom a la session
-            session.setAttribute("nom", nom);
-            
-            String cookies = request.getParameter("sauvegarde");
-            if(cookies!=null){
-                Cookie nomUtilisateur = new Cookie("nom", nom);
-                Cookie pwdutilisateur = new Cookie("pwd", password);
-                nomUtilisateur.setMaxAge(60 * 60 * 24);
-                pwdutilisateur.setMaxAge(60 * 60 * 24);
-                response.addCookie(nomUtilisateur);
-                response.addCookie(pwdutilisateur);
+        if (utilisateurAValider == null)//AUCUN UTILISATEUR TROUVER
+        {
+            session.setAttribute("userNotFound",courriel + "Ce courriel est invalide");
+            request.getRequestDispatcher("connexion.jsp").forward(request, response);
+        } 
+        else
+        {
+            if(utilisateurAValider.validatePassword(password))//MOTE DE PASSE VALIDE
+            {
+                                //Ajouter le nom a la session
+                session.setAttribute("nom", utilisateurAValider.getCourriel());
+
+                String cookies = request.getParameter("sauvegarde");
+                if(cookies!=null || true)
+                {
+                    //creation
+                    Cookie nomUtilisateur = new Cookie("utilisateur", utilisateurAValider.getCourriel());
+                    Cookie pwdutilisateur = new Cookie("pwd", utilisateurAValider.getMotDePasse());
+                    nomUtilisateur.setMaxAge(60 * 60 * 24);
+                    pwdutilisateur.setMaxAge(60 * 60 * 24);
+                    response.addCookie(nomUtilisateur);
+                    response.addCookie(pwdutilisateur);
+                    
+                    if(session.getAttribute("wrongPassword") != null)
+                    {
+                        session.removeAttribute("wrongPassword");
+                    }
+                    if(session.getAttribute("userNotFound") != null)
+                    {
+                        session.removeAttribute("userNotFound");
+                    }
+                }
+                request.getRequestDispatcher("produits").forward(request, response);
             }
-            request.getRequestDispatcher("produits").forward(request, response);
-        } else {
-            out.println("Le mot ou username est invalide");
-            request.getRequestDispatcher("connexion.jsp").include(request, response);
+            else//MOT DE PASSE NON-VALIDE
+            {
+               Cookie nomUtilisateur = new Cookie("nom", utilisateurAValider.getCourriel());
+                if(session.getAttribute("userNotFound") != null)
+                {
+                    session.removeAttribute("userNotFound");
+                }
+               response.addCookie(nomUtilisateur);
+               session.setAttribute("wrongPassword",utilisateurAValider.getCourriel() + "Ce mot de passe est invalide");
+            request.getRequestDispatcher("connexion.jsp").forward(request, response);
+            }
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -102,5 +129,5 @@ public class Connexion extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }

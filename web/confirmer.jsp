@@ -25,9 +25,12 @@
     <body>
         <jsp:include page = "navbar.jsp" flush = "true" />
         <div class="container">
-            <h2>affichage de panier</h2>     
-            <form action="commander">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Commander</button></br>
+            <h2>Votre Commande</h2>     
+            <p><span>Nom: </span>John Doe</p>
+            <p><span>Adress:  </span>Milington str 2546, HOHOHO Montreal, Quebec</p>
+            <p><span>Telephone: </span>461461416441  </p>
+            <form action="envoyer">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer</button></br>
             </form>
             <table class="table table-hover">
                 <thead>
@@ -47,7 +50,6 @@
                     <tr><td>Votre panier est vide</td></tr>
                     <%} else {
                         for (LignePanier l : les) {
-
                             somme += l.getProduit().getPrix() * l.getQuantite();
                             quant += l.getQuantite();
                     %>  
@@ -58,14 +60,7 @@
                         <td> <%=l.getProduit().getNom()%> </td>
                         <td> <%=l.getProduit().getPrix()%> CAD </td>
                         <td> <%=l.getProduit().getPrix() * l.getQuantite()%> CAD </td>
-                        <td> 
-                            <form action="modifierProduit">
-                                <input type="text" name="produit" value="<%=l.getProduit().getId()%>" hidden>
-                                <input type="text" name="quantite" value="<%=l.getQuantite()%>" size="3">
-                                <input type="submit" value="Modifier Quantité" >
-                                <input type="submit" name="retirer" value="Retirer Produit" > 
-                            </form>
-                        </td>                
+                        <td> <%=l.getQuantite()%></td>                
                     </tr>
                     <%          }
                             }
@@ -81,8 +76,8 @@
                     </tr>
                 </thead>
             </table>
-            <form action="commander">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Commander</button></br>
+            <form action="envoyer">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer</button></br>
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

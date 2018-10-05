@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.controller.Connexion"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,8 +21,12 @@
                 <div container>
                     <h1 >Connexion </h1>
                     <form class="form-signin" action="connexion" method="get">
-                        <input type="text" class="form-control" name="nom" placeholder="Nom" required autofocus></br>
-                        <input type="password" class="form-control" name="password" placeholder="Password" required></br>
+                        <input type="text" class="form-control" name="courriel" placeholder="Courriel" required autofocus>
+                        <% if(session.getAttribute("userNotFound") != null){ %> 
+                        <div class='alert alert-danger'> <%= session.getAttribute("userNotFound") %> </div> <% } %></br>
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <% if(session.getAttribute("wrongPassword") != null){ %>
+                        <div class='alert alert-danger'> <%= session.getAttribute("wrongPassword") %><% } %> </div></br>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></br>
                         <label class="checkbox pull-left">
                             <input type="checkbox" name="sauvegarde" value="yes">Remember me </br>
