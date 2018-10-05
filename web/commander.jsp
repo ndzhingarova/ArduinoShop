@@ -4,12 +4,15 @@
     Author     : nikoletad
 --%>
 
+<%@page import="com.entities.Utilisateur"%>
 <%@page import="java.util.Collection"%>
 <%@page import="java.util.List"%>
 <%@page import="com.entities.LignePanier"%>
 <%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% HashMap<Integer, LignePanier> articles = (HashMap<Integer, LignePanier>) session.getAttribute("panier");
+<%
+    HashMap<Integer, LignePanier> articles = (HashMap<Integer, LignePanier>) session.getAttribute("panier");
+    Utilisateur u = (Utilisateur) session.getAttribute("utilisateur");
 %>
 <!DOCTYPE html>
 <html>
@@ -24,45 +27,45 @@
             <form action="confirmer">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Prénom</label>
-                    <input type="text" class="form-control" name="prenom" placeholder="Votre prénom">
+                    <input type="text" class="form-control" name="prenom" placeholder="Votre prénom" value="<%=u.getPrenom()%>">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Nom</label>
-                    <input type="text" class="form-control" name="nom" placeholder="Votre nom">
+                    <input type="text" class="form-control" name="nom" placeholder="Votre nom" value="<%=u.getNom()%>">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Téléphone</label>
-                    <input type="text" class="form-control" name="telephone" placeholder="Votre téléphone">
+                    <input type="text" class="form-control" name="telephone" placeholder="Votre téléphone" value="<%=u.getTelephone()%>">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Address</label>
-                    <input type="text" class="form-control" name="adresse" placeholder="Votre address">
+                    <input type="text" class="form-control" name="adresse" placeholder="Votre address" value="<%=u.getAdresse()%>">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Ville</label>
-                    <input type="text" class="form-control" name="ville" placeholder="Votre ville">
+                    <input type="text" class="form-control" name="ville" placeholder="Votre ville" value="<%=u.getVille()%>">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Code Postal</label>
-                    <input type="text" class="form-control" name="codePostal" placeholder="Votre code postal">
+                    <input type="text" class="form-control" name="codePostal" placeholder="Votre code postal" value="<%=u.getCodePostal()%>">
                 </div>
                 <div class="form-group">
                     <label for="inputState">Province</label>
                     <select id="province" name="province" class="form-control">
                         <option selected>Votre province</option>
-                        <option>Alberta</option>
-                        <option>Colombie Britannique</option>
-                        <option>Île-du-Prince-Édouard</option>
-                        <option>Manitoba</option>
-                        <option>Nouveau-Brunswick</option>
-                        <option>Nouvelle-Écosse</option>
-                        <option>Ontario</option>
-                        <option>Québec</option>
-                        <option>Saskatchewan</option>
-                        <option>Terre-Neuve-et-Labrador</option>
-                        <option>Nunavut</option>
-                        <option>Territoires du Nord-Ouest</option>
-                        <option>Yukon</option>
+                        <option value="Alberta">Alberta</option>
+                        <option value="Colombie-Britannique">Colombie-Britannique</option>
+                        <option value="Île-du-Prince-Édouard">Île-du-Prince-Édouard</option>
+                        <option value="Manitoba">Manitoba</option>
+                        <option value="Nouveau-Brunswick">Nouveau-Brunswick</option>
+                        <option value="Nouvelle-Écosse">Nouvelle-Écosse</option>
+                        <option value="Ontario">Ontario</option>
+                        <option value="Québec">Québec</option>
+                        <option value="Saskatchewan">Saskatchewan</option>
+                        <option value="Terre-Neuve-et-Labrador">Terre-Neuve-et-Labrador</option>
+                        <option value="Nunavut">Nunavut</option>
+                        <option value="Territoires-du-Nord-Ouest">Territoires-du-Nord-Ouest</option>
+                        <option value="Yukon">Yukon</option>
                     </select>
                 </div>
                 <div class="form-check">
